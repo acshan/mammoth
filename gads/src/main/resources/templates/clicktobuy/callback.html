@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="Content-Style-Type" content="text/css">
@@ -26,7 +25,7 @@
 </script>
 
 
-<img class="itemimage" onclick="window.top.dost(params['clk']+'https://m.4008823823.com.cn')"/>
+<img class="itemimage" th:src="'/img/'+${creative_img}" th:onclick="'window.top.dost(params[\'clk\']'+${creative_url}+')'"/>
 <!--<img style="border: 0pt none; display: inline-block; width: 50px; height: 50px;" src='kfc.png'-->
 <!--onclick="window.top.dost(params['clk']+'https:////m.4008823823.com.cn')"/>-->
 </body>

@@ -15,6 +15,11 @@ public class App  extends SpringBootServletInitializer {
         SpringApplication.run(App.class,args);
     }
 
+    /**
+     * this part of implementation is for war packaging only
+     * @param application
+     * @return
+     */
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(App.class);
