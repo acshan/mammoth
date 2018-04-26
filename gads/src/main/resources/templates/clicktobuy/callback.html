@@ -25,7 +25,9 @@
 </script>
 
 
-<img class="itemimage" th:src="'/img/'+${creative_img}" th:onclick="'window.top.dost(params[\'clk\']'+${creative_url}+')'"/>
+<img class="itemimage" th:src="'/img/'+${creative_img}"
+     th:onclick="'window.top.dost(params[\'clk\']+\''+${creative_url}+'\')'"/>
+<!--<img class="itemimage" onclick="window.top.dost(params['clk']+'https://m.4008823823.com.cn')"/>-->
 <!--<img style="border: 0pt none; display: inline-block; width: 50px; height: 50px;" src='kfc.png'-->
 <!--onclick="window.top.dost(params['clk']+'https:////m.4008823823.com.cn')"/>-->
 </body>
