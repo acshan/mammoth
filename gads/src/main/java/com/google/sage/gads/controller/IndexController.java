@@ -17,6 +17,13 @@ public class IndexController {
     }
 
 
+    @RequestMapping("/video/vast")
+    public String vast(Model model) {
+        return "video/vast";
+    }
+
+
+
     @RequestMapping(value = "/clicktobuy/callback")
     public String ctbCallback(@RequestParam(value = "creative",required = false) String creative,Model model) {
 
