@@ -1,0 +1,95 @@
+<html>
+
+<script>
+    function onload() {
+        console.log('onload called!');
+    }
+
+
+    // var promise = new Promise(function (resolve, reject) {
+    //     // do a thing, possibly async, then…
+    //     if (1 == 1) {
+    //         resolve("Resolved!");
+    //     }
+    //     else {
+    //         reject("Rejected!");
+    //     }
+    // });
+    //
+    // promise.then(
+    //     //resolve
+    //     function (result) {
+    //     console.log(result); // "Stuff worked!"
+    // },
+    //     //reject
+    //     function (err) {
+    //     console.log(err); // Error: "It broke"
+    // }
+    // );
+
+
+
+    // get('story.json');
+    console.log('Ready to Execute get json');
+    get('story.json').then(function (response) {
+        console.log("Success!", response);
+    }
+    // , function (error) {
+    //     console.error("Failed!", error);
+    // }
+    ).catch(function (error) {
+        console.error("Failed!", error);
+    });
+
+    console.log('Ready to define a Promise');
+
+    function get(url) {
+        // Return a new promise.
+        return new Promise(function (resolve, reject) {
+            // Do the usual XHR stuff
+            var req = new XMLHttpRequest();
+            req.open('GET', url);
+
+            req.onload = function () {
+                // This is called even on 404 etc
+                // so check the status
+                if (req.status == 200) {
+                    // Resolve the promise with the response text
+                    resolve(req.response);
+                }
+                else {
+                    // Otherwise reject with the status text
+                    // which will hopefully be a meaningful error
+                    reject(Error(req.statusText));
+                }
+            };
+
+            // Handle network errors
+            req.onerror = function () {
+                reject(Error("Network Error"));
+            };
+            req.send();
+            console.log('Request sent');
+            setTimeout(function () {
+                console.log('wait a little bit...');
+            },1000);
+            // Make the request
+
+
+        });
+    }
+
+
+    console.log('Promise Completed!');
+
+
+
+
+
+
+</script>
+<body>
+
+</body>
+
+</html>

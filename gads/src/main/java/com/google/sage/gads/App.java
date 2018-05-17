@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class App  extends SpringBootServletInitializer {
+public class App extends SpringBootServletInitializer {
 
-    public static void main(String[] args){
-        SpringApplication.run(App.class,args);
+    public static void main(String[] args) {
+        SpringApplication.run(App.class, args);
     }
 
     /**
      * this part of implementation is for war packaging only
+     *
      * @param application
      * @return
      */

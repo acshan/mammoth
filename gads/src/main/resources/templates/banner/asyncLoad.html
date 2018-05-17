@@ -1,0 +1,54 @@
+
+<html>
+<head>
+
+    <script>
+
+        // Load GPT asynchronously
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+        (function() {
+            var gads = document.createElement("script");
+            gads.async = true;
+            gads.type = "text/javascript";
+            var useSSL = "https:" == document.location.protocol;
+            gads.src = (useSSL ? "https:" : "http:") +
+                "//www.googletagservices.com/tag/js/gpt.js";
+            var node = document.getElementsByTagName("script")[0];
+            node.parentNode.insertBefore(gads, node);
+        })();
+    </script>
+
+    <script>
+
+        googletag.cmd.push(function() {
+
+            // Define the ad slot
+            var slot1 = googletag.defineSlot("/6355419/Travel", [728, 90], "leaderboard").
+            setTargeting("test", "refresh").
+            addService(googletag.pubads());
+
+            // Start ad fetching
+            googletag.enableServices();
+            // Display
+            googletag.display("leaderboard");
+
+            // Set timer to refresh slot every 30 seconds
+            // setInterval(function(){googletag.pubads().refresh([slot1]);}, 3000);
+        });
+    </script>
+
+</head>
+
+<body>
+
+
+<!-- Ad slot to refresh -->
+<div id="leaderboard" style="width:728px; height:90px;"></div>
+
+<form onsubmit="googletag.pubads().refresh();return false;">
+    <input type="submit" value="refresh" />
+</form>
+
+</body>
+</html>
