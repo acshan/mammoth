@@ -1,13 +1,20 @@
 package com.google.sage.gads.controller;
 
 
+import com.google.sage.gads.model.Buyer;
 import com.google.sage.gads.model.enums.CreativeItemEnum;
+import com.google.sage.gads.service.BuyerService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.HtmlUtils;
+import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +22,10 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @Slf4j
 public class IndexController {
+
+
+    @Autowired
+    BuyerService buyerService;
 
     @RequestMapping("/clicktobuy")
     public String clickToBuy(Model model) {
@@ -31,19 +42,28 @@ public class IndexController {
 
     @RequestMapping(value = "/clicktobuy/callback")
     public String ctbCallback(@RequestParam(value = "creative", required = false) String creative, Model model) {
-        CreativeItemEnum creativeItemEnum;
-        if (creative == null) {
-            creativeItemEnum = CreativeItemEnum.EF;
+        if (StringUtils.isEmpty(creative)) {
+            log.error("creative param is Empty!");
+            fillCallBack(model);
         } else {
-            creativeItemEnum = CreativeItemEnum.valueOf(creative);
+            Buyer buyer = buyerService.getBuyer(creative);
+            if (buyer == null) {
+                log.error("Buyer is Empty! creative = " + creative);
+                fillCallBack(model);
+            } else {
+                model.addAttribute("creative_code", buyer.getCode());
+                model.addAttribute("creative_img", buyer.getImageUrl());
+                model.addAttribute("creative_url", buyer.getLandingUrl());
+            }
         }
-        if (creativeItemEnum == null) {
-            return null;
-        }
-        model.addAttribute("creative_code", creativeItemEnum.getCode());
-        model.addAttribute("creative_img", creativeItemEnum.getImg());
-        model.addAttribute("creative_url", creativeItemEnum.getUrl());
         return "clicktobuy/callback";
+    }
+
+
+    private void fillCallBack(Model model) {
+        model.addAttribute("creative_code", CreativeItemEnum.EF.getCode());
+        model.addAttribute("creative_img", CreativeItemEnum.EF.getImg());
+        model.addAttribute("creative_url", CreativeItemEnum.EF.getUrl());
     }
 
 
@@ -53,10 +73,28 @@ public class IndexController {
     }
 
 
-    @RequestMapping(value="/tracker")
-    public String clickTracker(HttpServletRequest request, Model model){
+    @RequestMapping(value = "/tracker")
+    public String clickTracker(HttpServletRequest request, Model model) {
         log.info(request.getParameterMap().toString());
         return null;
+    }
+
+
+    @RequestMapping(value = "/message")
+    public String websocketMessage(HttpServletRequest request, Model model) {
+        log.info(request.getParameterMap().toString());
+        return "message/message";
+    }
+
+
+
+    @MessageMapping("/playAds")
+    @SendTo("/topic/playAds")
+    public String playAds() throws Exception {
+        Thread.sleep(10); // simulated delay
+        log.info("Play Ads Request Received");
+        return "";
+//        return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }
 
 

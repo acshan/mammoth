@@ -23,10 +23,10 @@ public class BuyerServiceTester {
     public void createBuyer() throws Exception {
 
         Buyer buyer = new Buyer();
-        buyer.setCode("KFC");
-        buyer.setLandingUrl("http://www.google.com");
-        buyer.setImageUrl("kfc.png");
-        buyer.setName("KFC");
+        buyer.setCode("JD");
+        buyer.setLandingUrl("https://union-click.jd.com/sem.php?source=google-union&unionId=262767352&siteId=googleunion_270088008894&to=https://pro.m.jd.com/mall/active/2HGPbaLYUZczDBViCnvfhPGcNqDq/index.html");
+        buyer.setImageUrl("jd618.png");
+        buyer.setName("jd");
         buyerService.createBuyer(buyer);
     }
 

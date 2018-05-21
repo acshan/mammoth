@@ -16,6 +16,8 @@ public class BuyerServiceImp implements BuyerService {
     private final String imageUrlField="imageUrl";
     private final String landingUrlField="langdingUrl";
 
+    private final String dataStoreKind = "AdsBuyer";
+
     @Autowired
     Datastore datastore;
 
@@ -24,7 +26,7 @@ public class BuyerServiceImp implements BuyerService {
     @PostConstruct
     public void initializeKeyFactories() {
         log.info("Initializing key factories");
-        userKeyFactory = datastore.newKeyFactory().setKind("AdsBuyer");
+        userKeyFactory = datastore.newKeyFactory().setKind(dataStoreKind);
     }
 
 

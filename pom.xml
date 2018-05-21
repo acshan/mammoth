@@ -16,6 +16,10 @@
         <spring.boot.version>2.0.0.RELEASE</spring.boot.version> <!-- DO NOT UPDATE w/o MANUAL TESTING -->
         <google.datastore.version>1.26.0</google.datastore.version>
         <lombok.version>1.16.20</lombok.version>
+        <sockjs-client.version>1.0.0</sockjs-client.version>
+        <stomp-websocket.version>2.3.3</stomp-websocket.version>
+        <bootstrap.version>3.3.7</bootstrap.version>
+        <jquery.version>3.1.0</jquery.version>
     </properties>
 
 
@@ -49,6 +53,36 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>sockjs-client</artifactId>
+            <version>${sockjs-client.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>stomp-websocket</artifactId>
+            <version>${stomp-websocket.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${bootstrap.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${jquery.version}</version>
+        </dependency>
 
         <!--<dependency>-->
         <!--<groupId>org.thymeleaf</groupId>-->

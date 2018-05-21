@@ -4,4 +4,5 @@ spring:
 
 google:
   cloud:
-    credential_path: /Users/shanq/Work/Personal/Cloud/credential/SageGProj-b11b731d48d9.json
+#    credential_path: /Users/shanq/Work/Personal/Cloud/credential/SageGProj-b11b731d48d9.json
+    credential_path:

@@ -11,7 +11,7 @@
     function parseClickPing() {
         var qs = window.location.search, params = {};
         if (qs != null) {
-            qs = qs.substring(1);
+            qs = qs.substring(1).replace("http:","https:");
             var query = qs.split("&");
             for (var i = 0, l = query.length; i < l; i++) {
                 temp = query[i].split('=');

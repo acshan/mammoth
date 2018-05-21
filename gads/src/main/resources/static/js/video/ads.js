@@ -62,10 +62,17 @@ adsRequest.nonlinearAdSlotHeight = 150;
 
 // 按钮控制
 var playButton = document.getElementById('playButton');
-playButton.addEventListener('click', requestAds);
+playButton.addEventListener('click', startAds);
 
-function requestAds() {
-    adsLoader.requestAds(adsRequest);
+
+// 自动加载
+adsLoader.requestAds(adsRequest);
+
+// function requestAds() {
+//     adsLoader.requestAds(adsRequest);
+// }
+function startAds() {
+    playAds();
 }
 
 
@@ -100,12 +107,11 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
         onContentResumeRequested);
 
 
-
     adsManager.addEventListener(google.ima.AdEvent.Type.LOADED, onMediaLoaded, false);
 
 
     adsManager.addEventListener(
-        google.ima.AdEvent.Type.ALL_ADS_COMPLETED,onAllAdsComplete,false
+        google.ima.AdEvent.Type.ALL_ADS_COMPLETED, onAllAdsComplete, false
     );
 
     console.log('2. adsManager LOADED Event Added!');
@@ -116,7 +122,7 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
     console.log('3. adsManager Init');
 
     try {
-        setTimeout(playAds, AD_INTERVAL * 1000);
+        // setTimeout(playAds, AD_INTERVAL * 1000);
         // videoContent.play();
 
     } catch (adError) {
@@ -154,7 +160,7 @@ function playAds() {
 }
 
 
-function onAllAdsComplete(){
+function onAllAdsComplete() {
     console.log('All Ads Completed');
 
 }
@@ -162,3 +168,19 @@ function onAllAdsComplete(){
 function onAdError(adErrorEvent) {
     console.log('Error:' + adErrorEvent.h.l)
 }
+
+
+function connect() {
+    var socket = new SockJS('/ads-websocket');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        // setConnected(true);
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/playAds', function (adsPlay) {
+            playAds();
+            // console.log("Play Ads:" + adsPlay.toString());
+        });
+    });
+}
+
+connect();
