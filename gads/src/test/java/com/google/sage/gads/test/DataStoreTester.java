@@ -4,6 +4,7 @@ import com.google.cloud.datastore.Datastore;
 import com.google.cloud.datastore.Entity;
 import com.google.cloud.datastore.Key;
 import com.google.sage.gads.config.AdsConfig;
+import com.google.sage.gads.service.MessageService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class DataStoreTester {
 
     @Autowired
     private Datastore dataStore;
+
+    @Autowired
+    private MessageService messageService;
 
 
 
@@ -58,5 +62,10 @@ public class DataStoreTester {
     public void testCreateBuyer() throws Exception{
 
 
+    }
+
+    @Test
+    public void testSendMessage() throws Exception{
+        messageService.sendMessage();
     }
 }

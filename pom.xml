@@ -20,6 +20,7 @@
         <stomp-websocket.version>2.3.3</stomp-websocket.version>
         <bootstrap.version>3.3.7</bootstrap.version>
         <jquery.version>3.1.0</jquery.version>
+        <firebase.admin.version>5.9.0</firebase.admin.version>
     </properties>
 
 
@@ -102,6 +103,13 @@
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>${firebase.admin.version}</version>
         </dependency>
 
 

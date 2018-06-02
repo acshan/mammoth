@@ -26,6 +26,7 @@ public class AdsConfig {
 
 
     private String credentialPath;
+    private String firebaseProjectId;
 
 
 }

@@ -87,6 +87,28 @@ public class IndexController {
     }
 
 
+    @RequestMapping(value = "/banner/nonstandard")
+    public String bannerAds(HttpServletRequest request, Model model) {
+        log.info(request.getParameterMap().toString());
+        return "banner/non_standard_banner";
+    }
+
+
+    @RequestMapping(value = "/fb/receive")
+    public String receiveMsg(HttpServletRequest request, Model model) {
+        log.info(request.getParameterMap().toString());
+        return "firebase/receive";
+    }
+
+
+    @RequestMapping(value = "/fb/send")
+    public String sendMsg(HttpServletRequest request, Model model) {
+        log.info(request.getParameterMap().toString());
+        return "firebase/send";
+    }
+
+
+
 
     @MessageMapping("/playAds")
     @SendTo("/topic/playAds")
@@ -96,6 +118,9 @@ public class IndexController {
         return "";
 //        return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }
+
+
+
 
 
 }

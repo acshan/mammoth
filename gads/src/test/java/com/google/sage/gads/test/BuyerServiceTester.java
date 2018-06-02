@@ -19,6 +19,7 @@ public class BuyerServiceTester {
     BuyerService buyerService;
 
 
+
     @Test
     public void createBuyer() throws Exception {
 

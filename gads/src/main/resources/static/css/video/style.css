@@ -18,10 +18,10 @@
     overflow: hidden;
 }
 
-#playButton {
+#playButton,#playFullButton {
     margin-top:10px;
     vertical-align: top;
-    width: 350px;
+    width: 310px;
     height: 60px;
     padding: 0;
     font-size: 22px;

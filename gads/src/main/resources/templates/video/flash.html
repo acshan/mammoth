@@ -1,0 +1,225 @@
+<html>
+<head>
+    <title>IMA HTML5 Simple Demo</title>
+    <style type="text/css">
+        #mainContainer {
+            position: relative;
+            width: 640px;
+            height: 360px;
+        }
+
+        #content, #adContainer {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 640px;
+            height: 360px;
+        }
+
+        #adContainer {
+            display: none;
+        }
+
+        #contentElement {
+            width: 640px;
+            height: 360px;
+            overflow: hidden;
+        }
+
+        #playButton {
+            margin-top: 10px;
+            vertical-align: top;
+            width: 350px;
+            height: 60px;
+            padding: 0;
+            font-size: 22px;
+            color: white;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+            background: #2c3e50;
+            border: 0;
+            border-bottom: 2px solid #22303f;
+            cursor: pointer;
+            -webkit-box-shadow: inset 0 -2px #22303f;
+            box-shadow: inset 0 -2px #22303f;
+        }
+    </style>
+</head>
+
+<body>
+<div id="mainContainer">
+    <div id="content">
+        <object type="application/x-shockwave-flash" data="IMA_H5_in_FLash.swf" style="width:640px;height:420px;"
+                id="contentElement">
+            <param name="movie" value="IMA_H5_in_FLash.swf"/>
+            <param name="quality" value="high"/>
+            <param name="bgcolor" value="#ffffff"/>
+            <param name="play" value="true"/>
+            <param name="loop" value="true"/>
+            <param name="wmode" value="window"/>
+            <param name="scale" value="showall"/>
+            <param name="menu" value="true"/>
+            <param name="devicefont" value="false"/>
+            <param name="salign" value=""/>
+            <param name="allowScriptAccess" value="always"/>
+        </object>
+    </div>
+    <div id="adContainer"></div>
+    <div>
+        <!--         <button id="playButton">Play</button>
+         -->      </div>
+</div>
+<script type="text/javascript" src="https://imasdk.googleapis.com/js/sdkloader/ima3_debug.js"></script>
+<script type="text/javascript">
+    function flashConsole(loginfo) {
+        console.log(loginfo);
+    }
+
+    var videoContent = document.getElementById('contentElement');
+    videoContent.currentTime = 0;
+
+    function updateCurrentTime() {
+        // body...
+        videoContent.currentTime = videoContent.getCurrentTime();
+    }
+
+    google.ima.settings.setLocale('zh-cn');
+    var adDisplayContainer =
+        new google.ima.AdDisplayContainer(
+            document.getElementById('adContainer'),
+            videoContent);
+    // Must be done as the result of a user action on mobile
+    adDisplayContainer.initialize();
+    // Re-use this AdsLoader instance for the entire lifecycle of your page.
+    var adsLoader = new google.ima.AdsLoader(adDisplayContainer);
+
+    //Disabling Automatic Playback of Ad Breaks
+    adsLoader.getSettings().setAutoPlayAdBreaks(false);
+
+    // Add event listeners
+    adsLoader.addEventListener(
+        google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
+        onAdsManagerLoaded,
+        false);
+    adsLoader.addEventListener(
+        google.ima.AdErrorEvent.Type.AD_ERROR,
+        onAdError,
+        false);
+
+    function onAdError(adErrorEvent) {
+        // Handle the error logging and destroy the AdsManager
+        console.log(adErrorEvent.getError());
+        adsManager.destroy();
+    }
+
+    // An event listener to tell the SDK that our content video
+    // is completed so the SDK can play any post-roll ads.
+    var contentEndedListener = function () {
+        console.log("contentEndedListener");
+        adsLoader.contentComplete();
+    };
+    // videoContent.onended = contentEndedListener;
+    //videoContent.addContentCompleteListener();
+
+    // var playButton = document.getElementById('playButton');
+    // playButton.addEventListener('click', requestAds);
+
+    function preloadAd(adTagUrl) {
+        // Request video ads.
+        var adsRequest = new google.ima.AdsRequest();
+        adsRequest.adTagUrl = adTagUrl;
+
+// Specify the linear and nonlinear slot sizes. This helps the SDK to
+// select the correct creative if multiple are returned.
+        adsRequest.linearAdSlotWidth = 640;
+        adsRequest.linearAdSlotHeight = 400;
+        adsRequest.nonLinearAdSlotWidth = 640;
+        adsRequest.nonLinearAdSlotHeight = 150;
+        adsLoader.requestAds(adsRequest);
+    }
+
+    function adsManagerStart() {
+        console.log("adsManagerStart");
+        try {
+            // Call start to show ads. Single video and overlay ads will
+            // start at this time; this call will be ignored for ad rules, as ad rules
+            // ads start when the adsManager is initialized.
+            adsManager.start();
+            //æ˜¾ç¤ºadContainer
+            document.getElementById("adContainer").style.display = "block";
+        } catch (adError) {
+            // An error may be thrown if there was a problem with the VAST response.
+            console.log(adError);
+        }
+    }
+
+    // function requestAds() {
+    //   adsLoader.requestAds(adsRequest);
+    // }
+    function onAdsManagerLoaded(adsManagerLoadedEvent) {
+
+        var adsRenderingSettings = new google.ima.AdsRenderingSettings();
+        adsRenderingSettings.enablePreloading = true;
+        //ç»™è§†é¢‘å¹¿å‘ŠåŠ ä¸Šå€’è®¡æ—¶å’Œå…³é—­æŒ‰é’®
+        adsRenderingSettings.uiElements = [google.ima.UiElements.COUNTDOWN, google.ima.UiElements.AD_ATTRIBUTION];
+        //ç»™overlayåŠ ä¸Šå…³é—­æŒ‰é’®
+        adsRenderingSettings.useStyledNonLinearAds = true;
+
+        // Get the ads manager.
+        adsManager = adsManagerLoadedEvent.getAdsManager(
+            videoContent, adsRenderingSettings);  // See API reference for contentPlayback
+
+
+        // Add listeners to the required events.
+        adsManager.addEventListener(
+            google.ima.AdErrorEvent.Type.AD_ERROR,
+            onAdError);
+        adsManager.addEventListener(
+            google.ima.AdEvent.Type.CONTENT_PAUSE_REQUESTED,
+            onContentPauseRequested);
+        adsManager.addEventListener(
+            google.ima.AdEvent.Type.CONTENT_RESUME_REQUESTED,
+            onContentResumeRequested);
+        // For non-auto ad breaks, listen for ad break ready
+        adsManager.addEventListener(
+            google.ima.AdEvent.Type.AD_BREAK_READY,
+            adBreakReadyHandler);
+
+        try {
+            // Initialize the ads manager. Ad rules playlist will start at this time.
+            adsManager.init(640, 360, google.ima.ViewMode.NORMAL);
+        } catch (adError) {
+            // An error may be thrown if there was a problem with the VAST response.
+            console.log(adError);
+        }
+    }
+
+    function adBreakReadyHandler() {
+        // Once we're ready to play ads. To skip this ad break, simply return
+        // from this handler without calling adsManager.start().
+        //adsManager.start();
+        console.log("adBreakReadyHandler");
+    }
+
+    function onContentPauseRequested() {
+        // This function is where you should setup UI for showing ads (e.g.
+        // display ad timer countdown, disable seeking, etc.)
+
+        // videoContent.removeEventListener('ended', contentEndedListener);
+        // videoContent.pause();
+        videoContent.removeContentCompleteListener();
+        videoContent.contentPause();
+    }
+
+    function onContentResumeRequested() {
+        // This function is where you should ensure that your UI is ready
+        // to play content.
+        // videoContent.addEventListener('ended', contentEndedListener);
+        // videoContent.play();
+        document.getElementById("adContainer").style.display = "none";
+        videoContent.addContentCompleteListener();
+        videoContent.contentResume();
+    }
+</script>
+</body>
+</html>

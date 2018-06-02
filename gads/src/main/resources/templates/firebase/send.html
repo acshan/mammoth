@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SendMsg</title>
+</head>
+
+<script src="https://www.gstatic.com/firebasejs/5.0.2/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.0.2/firebase-firestore.js"></script>
+<script src="/js/firebase/database.js"></script>
+<script>
+    var db_name = 'ads_play_message';
+
+
+    // db.ref("ads_play_message").set({ads: "kfc", title: "kfc618"});
+
+
+    // db.ref("myname").set("jorge cardoso");
+    //
+    //
+    //
+    // db.ref("user").set({username: "jorge", email:"jorgecardoso@ieee.org"});
+    //
+    // var pushedReference = db.ref("messages").push({message:"Fine!", date:"10/04/2017", to:"someuser"});
+    // var pushedReference = db.ref(db_name).push({ads:"aaa", title:"aaa111"});
+
+    db.collection(db_name).add({
+        ads: "Ada",
+        title: "Lovelace",
+    })
+        .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+    //
+    // db.ref("user").child("username").set("jorgecardoso"); // or
+    // db.ref("user/username").set("jorge_cardoso")
+
+
+    // db.ref("myname").set(null);
+
+
+    // db.ref("ads_play_message").on("value", function (snapshot) {
+    //     console.log("ads_play_message added: ", snapshot.val());
+    // });
+
+
+</script>
+
+
+</html>
