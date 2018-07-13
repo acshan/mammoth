@@ -39,6 +39,11 @@ public class IndexController {
         return "video/videoInVideo";
     }
 
+    @RequestMapping("/video/sdkless")
+    public String sdkless(Model model) {
+        return "sdkless/SDKless";
+    }
+
 
     @RequestMapping(value = "/clicktobuy/callback")
     public String ctbCallback(@RequestParam(value = "creative", required = false) String creative, Model model) {
@@ -57,6 +62,12 @@ public class IndexController {
             }
         }
         return "clicktobuy/callback";
+    }
+
+
+    @RequestMapping(value = "/clicktobuy/mcallback")
+    public String ctbMCallback(Model model) {
+        return "clicktobuy/mobile/mcallback_dfp";
     }
 
 

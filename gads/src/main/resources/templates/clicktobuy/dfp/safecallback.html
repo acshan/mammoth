@@ -1,0 +1,39 @@
+<div id="container">
+    <style type="text/css">
+        #container {
+            background-color: #EEF;
+            width: 500px;
+            height: 500px;
+        }
+
+        button {
+            font-size: 15px;
+            width: 100px;
+            height: 50px;
+            display: block;
+            margin: 10px auto;
+        }
+
+        #percentage {
+            text-align: center;
+            font-size: 30px;
+        }
+    </style>
+    <script>
+        function updateInViewPercentage() {
+            var text = $sf.ext.inViewPercentage() + '%';
+            document.getElementById('percentage').innerHTML = text;
+        }
+
+        $sf.ext.register(500, 500, function(status, data) {
+            // Do nothing. This test doesn't make use of this callback.
+        });
+    </script>
+    <span>
+        <strong> $sf.ext.inViewPercentage</strong>
+        <br>Button click should show percentage of the cretive in view. Change browser size/scroll to
+        partially hide the creative and button click should show different percentage.
+    </span>
+    <button onclick="updateInViewPercentage();">In view pecentage</button>
+    <div id="percentage"></div>
+</div>

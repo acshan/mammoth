@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<iframe src="child.html" height="50px" width="50px"></iframe>
+
+<script>
+    window.addEventListener("message", receiveMessage, false);
+
+    function receiveMessage(event)
+    {
+        // For Chrome, the origin property is in the event.originalEvent
+        // object.
+        // 这里不准确，chrome没有这个属性
+        // var origin = event.origin || event.originalEvent.origin;
+        // var origin = event.origin
+        // if (origin !== "http://example.org:8080")
+        //     return;
+
+        // ...
+        // if(event.source=='')
+            if(event.data.trim()){
+                alert(event.data);
+            }
+        // console.log("success! Message="+event.data);
+    }
+</script>
+
+</body>
+</html>

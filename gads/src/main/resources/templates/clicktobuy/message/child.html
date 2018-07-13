@@ -1,0 +1,20 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    function send_msg() {
+        var lp_url = "Hello Landing Page";
+        parentUrl = document.referrer;
+        var ref=document.createElement('a');
+        ref.href=document.referrer;
+        window.parent.postMessage("Hello!",ref.protocol+ref.host);
+    }
+</script>
+<img src="https://tpc.googlesyndication.com/pagead/imgad?id=CICAgKCbqeDhrgEQARgBKAEyCBrmKq5VgNglQLaejNoF" onclick="send_msg()" style="width:50px;height:50px"/>
+
+</body>
+</html>

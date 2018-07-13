@@ -14,7 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-@Configuration
+//@Configuration
 @Slf4j
 public class FirebaseConfig {
 
